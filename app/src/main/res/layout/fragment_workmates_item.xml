@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#f3f3f3">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/workmate_picture"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:src="@drawable/cafe"
+        android:layout_margin="20px"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/workmate_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:text="Scarlett"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/workmate_picture"
+        app:layout_constraintStart_toEndOf="@+id/workmate_picture"
+        app:layout_constraintTop_toTopOf="@id/workmate_picture" />
+
+    <TextView
+        android:id="@+id/workmate_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4sp"
+        android:text="is eating french (Le Zinc)"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/workmate_picture"
+        app:layout_constraintStart_toEndOf="@+id/workmate_name"
+        app:layout_constraintTop_toTopOf="@id/workmate_picture" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

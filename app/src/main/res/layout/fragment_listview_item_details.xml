@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/details_listview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/restaurant_image"
+        android:layout_width="match_parent"
+        android:layout_height="260sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blured_family" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_image"
+        app:cardBackgroundColor="#db3c23">
+
+        <TextView
+            android:id="@+id/restaurant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Le Zinc"
+            android:layout_marginLeft="8sp"
+            android:layout_marginTop="8sp"
+            android:layout_marginBottom="8sp"/>
+
+        <TextView
+            android:id="@+id/restaurant_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="French restaurant - 12 rue du Faubourg Poissonnière"
+            android:layout_marginTop="32sp"
+            android:layout_marginLeft="8sp"
+            android:layout_marginBottom="32sp"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardview"
+        app:cardBackgroundColor="#f3f3f3">
+
+        <ImageView
+            android:id="@+id/restaurant_phone_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="26sp"
+            android:layout_marginLeft="92sp"
+            android:layout_marginTop="8sp"
+            app:srcCompat="@drawable/ic_baseline_local_phone_24"
+            app:tint="#db3c23" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CALL"
+            android:layout_marginLeft="88sp"
+            android:layout_marginTop="40sp"
+            android:layout_marginBottom="16sp"
+            android:textColor="#db3c23"
+            />
+
+        <ImageView
+            android:id="@+id/restaurant_star_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="26sp"
+            android:layout_marginLeft="184sp"
+            android:layout_marginTop="8sp"
+            app:srcCompat="@drawable/ic_baseline_star_24"
+            app:tint="#db3c23"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LIKE"
+            android:layout_marginLeft="180sp"
+            android:layout_marginTop="40sp"
+            android:layout_marginBottom="16sp"
+            android:textColor="#db3c23"
+            />
+
+        <ImageView
+            android:id="@+id/restaurant_website_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="26sp"
+            android:layout_marginLeft="276sp"
+            android:layout_marginTop="8sp"
+            app:srcCompat="@drawable/ic_baseline_public_24"
+            app:tint="#db3c23"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WEBSITE"
+            android:layout_marginLeft="272sp"
+            android:layout_marginTop="40sp"
+            android:layout_marginBottom="16sp"
+            android:textColor="#db3c23"
+            />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        tools:listitem="@layout/fragment_listview_item_details_item"
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardview2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

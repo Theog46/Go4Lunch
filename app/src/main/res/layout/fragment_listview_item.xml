@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#f3f3f3">
+
+
+    <TextView
+        android:id="@+id/restaurant_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_margin="16px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/restaurant_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Japanese - 24 rue des Petites Ecoles"
+        android:textSize="14sp"
+        android:textColor="#7c807d"
+        android:layout_margin="16px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/restaurant_name"
+        app:layout_constraintRight_toLeftOf="@id/restaurant_range"/>
+
+    <TextView
+        android:id="@+id/restaurant_hours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Open until 7.30pm"
+        android:textSize="14sp"
+        android:textColor="#7c807d"
+        android:textStyle="italic"
+        android:layout_margin="16px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/restaurant_address" />
+
+    <TextView
+        android:id="@+id/restaurant_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.2km"
+        android:textSize="16sp"
+        android:textColor="#7c807d"
+        android:layout_marginRight="32px"
+        app:layout_constraintEnd_toStartOf="@id/restaurant_picture"
+
+        app:layout_constraintTop_toBottomOf="@id/restaurant_name" />
+    
+    <ImageView
+        android:id="@+id/star_1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="10sp"
+        android:src="@drawable/ic_baseline_star_24"
+        app:tint="@color/yellow"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/restaurant_picture"
+        app:layout_constraintTop_toBottomOf="@id/restaurant_range"/>
+
+    <ImageView
+        android:id="@+id/star_2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="30sp"
+        android:src="@drawable/ic_baseline_star_24"
+        app:tint="@color/yellow"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/restaurant_picture"
+        app:layout_constraintTop_toBottomOf="@id/restaurant_range"/>
+
+    <ImageView
+        android:id="@+id/star_3"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="50sp"
+        android:src="@drawable/ic_baseline_star_24"
+        app:tint="@color/yellow"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/restaurant_picture"
+        app:layout_constraintTop_toBottomOf="@id/restaurant_range"/>
+
+
+    <ImageView
+        android:id="@+id/restaurant_picture"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_margin="20px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cafe"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

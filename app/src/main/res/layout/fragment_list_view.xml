@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/fragment_page_listview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.go4lunch.fragments.ListViewFragment"
+    android:orientation="vertical"
+    >
+
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_main_recycler_view"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+
+        tools:listitem="@layout/fragment_listview_item"
+        />
+
+</LinearLayout>

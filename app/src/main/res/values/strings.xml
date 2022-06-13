@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Go4Lunch</string>
+    <string name="facebook_app_id">2816254995335209</string>
+    <string name="fb_login_protocol_scheme">fb2816254995335209</string>
+    <string name="google_sign_up">Sign in with Google</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

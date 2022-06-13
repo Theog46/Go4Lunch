@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/drawable/ic_baseline_list_24.xml" value="0.15364583333333334" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.15364583333333334" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/drawable/ic_baseline_people_24.xml" value="0.15364583333333334" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/drawable/selector.xml" value="0.15364583333333334" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/activity_home.xml" value="0.3378623188405797" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/fragment_list_view.xml" value="0.3210227272727273" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/fragment_listview_item.xml" value="0.33" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/fragment_listview_item_details.xml" value="0.36666666666666664" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/fragment_listview_item_details_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/fragment_map_view.xml" value="0.3111413043478261" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/fragment_maps.xml" value="0.2563405797101449" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/fragment_page.xml" value="0.22" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/fragment_workmates.xml" value="0.36666666666666664" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/fragment_workmates_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/home_activity.xml" value="0.25" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/home_activity_nav_header.xml" value="0.22" />
+        <entry key="..\:/Theo/Documents/AndroidStudioProjects/Go4Lunch/app/src/main/res/menu/home_activity_menu_drawer.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
