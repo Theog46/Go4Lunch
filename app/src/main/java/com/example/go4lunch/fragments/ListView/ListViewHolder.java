@@ -25,7 +25,6 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
     private final ImageView secondStar = itemView.findViewById(R.id.star_2);
     private final ImageView thirdStar = itemView.findViewById(R.id.star_3);
     private final TextView  range = itemView.findViewById(R.id.restaurant_range);
-    /* TODO : calculer la distance entre user et chaque restos */
 
 
 
@@ -69,6 +68,9 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
             restaurantImage.setVisibility(View.VISIBLE);
         }
     }
+
+
+
 
 
 }

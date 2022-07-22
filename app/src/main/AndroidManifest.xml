@@ -32,11 +32,13 @@
         -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyD9OlAs1B8_MPT9GlukT45XswE5eqxsCUM" />
+            android:value="AIzaSyAr31Q0BPWSvC-TiZ_ZCPmXB3qxj2N1Y4E" />
 
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
+
+        <activity android:name=".DetailsActivity" android:exported="false"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

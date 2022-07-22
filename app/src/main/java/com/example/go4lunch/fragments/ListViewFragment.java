@@ -64,20 +64,10 @@ public class ListViewFragment extends Fragment {
                 Log.d("BAH", String.valueOf(data));
 
             }
-
-
         });
-
-
-
 
         return view;
     }
-
-
-
-
-
 
 
 

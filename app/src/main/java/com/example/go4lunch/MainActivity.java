@@ -6,7 +6,9 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.go4lunch.ViewModel.FirestoreViewModel;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -27,6 +29,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,16 +38,25 @@ public class MainActivity extends AppCompatActivity {
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
     private CallbackManager mCallbackManager;
-
+    private FirebaseFirestore db;
+    FirestoreViewModel fireStoreViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
+
+        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        //Initialize Firebase Store
+        db = FirebaseFirestore.getInstance();
+
+
 
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton fbBtn = findViewById(R.id.login_button);
@@ -72,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 signIn();
             }
         });
+        fireStoreViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(FirestoreViewModel.class);
+
     }
 
     private void handleFacebookAccessToken(AccessToken accessToken) {
@@ -101,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
     }
 
     @Override
@@ -115,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account.getIdToken());
+
             } catch (ApiException e) {
 
             }
@@ -131,6 +148,9 @@ public class MainActivity extends AppCompatActivity {
 
                             FirebaseUser user = mAuth.getCurrentUser();
 
+                            addUserToFirestore(user);
+
+
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
 
@@ -143,6 +163,14 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    private void addUserToFirestore(FirebaseUser user) {
+        if (user != null && !user.isAnonymous()) {
+            fireStoreViewModel.createUser(user.getUid(), user.getPhotoUrl().toString(), user.getDisplayName(), user.getEmail());
+            FirebaseMessaging.getInstance().subscribeToTopic("users");
+
+
+        }
+    }
 
 
 }

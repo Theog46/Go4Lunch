@@ -1,17 +1,17 @@
 package com.example.go4lunch.fragments.ListView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.go4lunch.DetailsActivity;
 import com.example.go4lunch.R;
 import com.example.go4lunch.ViewModel.RestaurantItem;
-import com.example.go4lunch.fragments.DetailsFragment;
 
 import java.util.List;
 
@@ -19,6 +19,10 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewHolder> {
 
     private final List<RestaurantItem> restaurantItems;
     final Context context;
+
+
+
+
 
     public ListViewAdapter(Context context, List<RestaurantItem> restaurantItems) {
         this.context = context;
@@ -35,23 +39,15 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewHolder> {
 
 
 
+
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
 
         holder.createViewRestaurants(restaurantItems.get(position));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                    DetailsFragment detailsFragment = new DetailsFragment();
-                    activity.getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.activity_main_drawer_layout, detailsFragment)
-                            .addToBackStack(null)
-                            .commit();
-
-            }
+        holder.itemView.setOnClickListener(view -> {
+            Intent i = new Intent(view.getContext(), DetailsActivity.class);
+            i.putExtra("key", restaurantItems.get(position).getPlace_id());
+            view.getContext().startActivity(i);
         });
     }
 

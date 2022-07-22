@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.go4lunch.Model.Maps.Location;
 import com.example.go4lunch.Model.Maps.OpeningHours;
 import com.example.go4lunch.Model.Maps.Result;
+import com.example.go4lunch.Repository.FirestoreRepository;
 import com.example.go4lunch.Repository.NearbyRepository;
 import com.example.go4lunch.Repository.UserLocationRepository;
 
@@ -27,8 +28,8 @@ public class RestaurantsListViewModel extends ViewModel {
 
     public RestaurantsListViewModel(
             @NonNull NearbyRepository nearbyRepository,
-            @NonNull UserLocationRepository userLocationRepository
-    ) {
+            @NonNull UserLocationRepository userLocationRepository,
+            @NonNull FirestoreRepository firestoreRepository) {
         this.nearbyRepository = nearbyRepository;
         this.userLocationRepository = userLocationRepository;
 
@@ -53,6 +54,7 @@ public class RestaurantsListViewModel extends ViewModel {
 
             for (Result result : restaurant) {
                 restaurantStateItems.add(new RestaurantItem(
+                        result.getPlaceId(),
                         result.getName(),
                         result.getGeometry().getLocation().getLat(),
                         result.getGeometry().getLocation().getLng(),

@@ -11,6 +11,7 @@
     tools:context=".HomeActivity">
 
 <LinearLayout
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -52,8 +53,18 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/home_activity_nav_header"
         app:menu="@menu/home_activity_menu_drawer"
-        android:background="#ed7839"/>
+        android:background="#ed7839">
 
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:contentDescription=""
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/logo"
+        android:layout_gravity="bottom|center"
+        />
+
+    </com.google.android.material.navigation.NavigationView>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

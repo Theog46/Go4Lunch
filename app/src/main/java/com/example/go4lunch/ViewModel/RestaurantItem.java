@@ -6,6 +6,7 @@ import com.example.go4lunch.Model.Maps.Photo;
 import java.util.List;
 
 public class RestaurantItem {
+    private String place_id;
     private String name;
     private Double lat;
     private Double lng;
@@ -17,7 +18,8 @@ public class RestaurantItem {
 
 
 
-    public RestaurantItem(String name, Double lat, Double lng, String vicinity, List<Photo> pictures, Integer range, Float rating, Boolean isOpen) {
+    public RestaurantItem(String place_id,String name, Double lat, Double lng, String vicinity, List<Photo> pictures, Integer range, Float rating, Boolean isOpen) {
+        this.place_id = place_id;
         this.name = name;
         this.lat = lat;
         this.lng = lng;
@@ -28,6 +30,10 @@ public class RestaurantItem {
         this.isOpen = isOpen;
 
 
+    }
+
+    public String getPlace_id() {
+        return place_id;
     }
 
     public String getName() {
