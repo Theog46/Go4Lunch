@@ -1,5 +1,6 @@
 package com.example.go4lunch.Service;
 
+import com.example.go4lunch.Model.AutoComplete.Predictions;
 import com.example.go4lunch.Model.Details.ResultsApiDetails;
 import com.example.go4lunch.Model.Maps.ResultsApiMaps;
 
@@ -21,5 +22,15 @@ public interface RetrofitAPI {
             @Query("place_id") String place_id,
             @Query("fields") String fields,
             @Query("key") String key
+    );
+
+    @GET("autocomplete/json")
+    Call<Predictions> getAutoComplete(
+      @Query("input") String input,
+      @Query("location") String location,
+      @Query("types") String types,
+      @Query("radius") Integer radius,
+      @Query("strictbounds") String strictbounds,
+      @Query("key") String key
     );
 }

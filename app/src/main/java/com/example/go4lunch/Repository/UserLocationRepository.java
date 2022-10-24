@@ -4,6 +4,7 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.go4lunch.Model.Maps.Location;
@@ -14,44 +15,44 @@ import com.google.android.gms.location.LocationResult;
 
 public class UserLocationRepository {
 
-
-    @NonNull
-    private final FusedLocationProviderClient fusedLocationProviderClient;
-
-    @NonNull
     private final MutableLiveData<Location> locationMutableLiveData = new MutableLiveData<>();
 
-    private LocationCallback callback;
+    private LocationCallback locationCallback;
 
-    public UserLocationRepository(@NonNull FusedLocationProviderClient fusedLocationProviderClient) {
+    private final FusedLocationProviderClient fusedLocationProviderClient;
+
+    public UserLocationRepository(FusedLocationProviderClient fusedLocationProviderClient) {
         this.fusedLocationProviderClient = fusedLocationProviderClient;
     }
 
-
+    public LiveData<Location> locationLiveData() {
+        return locationMutableLiveData;
+    }
 
     @RequiresPermission(anyOf = {"android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"})
     public void getLocation() {
-        if (callback == null) {
-            callback = new LocationCallback() {
+        if (locationCallback == null) {
+            locationCallback = new LocationCallback() {
                 @Override
                 public void onLocationResult(@NonNull LocationResult locationResult) {
-                    Location userLocation = new Location();
-                    userLocation.setLat(locationResult.getLastLocation().getLatitude());
-                    userLocation.setLng(locationResult.getLastLocation().getLongitude());
-                    locationMutableLiveData.setValue(userLocation);
+                    Location location = new Location();
+                    location.setLat(locationResult.getLastLocation().getLatitude());
+                    location.setLng(locationResult.getLastLocation().getLongitude());
+                    locationMutableLiveData.setValue(location);
                 }
             };
         }
-
-        fusedLocationProviderClient.removeLocationUpdates(callback);
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
         fusedLocationProviderClient.requestLocationUpdates(
                 LocationRequest.create()
-                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                    .setInterval(8000),
-                callback,
+                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY),
+                locationCallback,
                 Looper.getMainLooper()
         );
     }
-
-
+    public void stopRequest() {
+        if (locationCallback != null) {
+            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        }
+    }
 }

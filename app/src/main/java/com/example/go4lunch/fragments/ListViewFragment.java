@@ -1,7 +1,7 @@
 package com.example.go4lunch.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,8 @@ import com.example.go4lunch.ViewModel.RestaurantItem;
 import com.example.go4lunch.ViewModel.RestaurantsListViewModel;
 import com.example.go4lunch.ViewModelFactory;
 import com.example.go4lunch.fragments.ListView.ListViewAdapter;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,51 +28,42 @@ public class ListViewFragment extends Fragment {
     private RecyclerView recyclerView;
     private RestaurantsListViewModel restaurantsListViewModel;
     List<RestaurantItem> data = new ArrayList<>();
-
-
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private String userLocation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_list_view, container, false);
 
-
         restaurantsListViewModel = new ViewModelProvider(this,
                 ViewModelFactory.getInstance()).get(RestaurantsListViewModel.class);
 
-
         recyclerView = view.findViewById(R.id.fragment_main_recycler_view);
-
-
+        recyclerView.setHasFixedSize(true);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         ListViewAdapter adapter = new ListViewAdapter(getActivity(), data);
         recyclerView.setAdapter(adapter);
 
-        //* TODO ARRANGER POUR PASSER USERLOCATION *//
-        
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
+        });
+        restaurantsListViewModel.initList(userLocation);
 
-        restaurantsListViewModel.initList("37.4219983%2C-122.084");
         restaurantsListViewModel.getRestaurants().observe(getViewLifecycleOwner(), restaurantItems -> {
             if (restaurantItems != null) {
+                data.clear();
                 data.addAll(restaurantItems);
                 adapter.notifyDataSetChanged();
-                Log.d("AH", String.valueOf(restaurantItems));
-                Log.d("BAH", String.valueOf(data));
-
             }
         });
-
         return view;
     }
-
-
-
-
-
 }

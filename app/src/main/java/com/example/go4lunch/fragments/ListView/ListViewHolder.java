@@ -1,6 +1,8 @@
 package com.example.go4lunch.fragments.ListView;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +27,8 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
     private final ImageView secondStar = itemView.findViewById(R.id.star_2);
     private final ImageView thirdStar = itemView.findViewById(R.id.star_3);
     private final TextView  range = itemView.findViewById(R.id.restaurant_range);
-
+    private final TextView workmatesNumber = itemView.findViewById(R.id.workmate_number);
+    private final ImageView workmatesImg = itemView.findViewById(R.id.workmate_icon);
 
 
 
@@ -37,10 +40,24 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
         restaurantName.setText(restaurantItem.getName());
         restaurantVicinity.setText(restaurantItem.getVicinity());
 
+        if (restaurantItem.getWorkmates_number() != 0) {
+            workmatesNumber.setText(String.valueOf("(" + restaurantItem.getWorkmates_number() + ")"));
+            workmatesNumber.setVisibility(View.VISIBLE);
+            workmatesImg.setVisibility(View.VISIBLE);
+        } if (restaurantItem.getWorkmates_number() == 0) {
+            workmatesNumber.setVisibility(View.INVISIBLE);
+            workmatesImg.setVisibility(View.INVISIBLE);
+        }
+
         if (restaurantItem.getOpeningHours()) {
-            isRestaurantOpen.setText("Open");
-        } else {
-            isRestaurantOpen.setText("Close");
+            isRestaurantOpen.setText(R.string.open);
+            isRestaurantOpen.setTypeface(null, Typeface.ITALIC);
+            isRestaurantOpen.setTextColor(Color.rgb(128, 128, 128));
+        }
+        if (!restaurantItem.getOpeningHours()) {
+            isRestaurantOpen.setText(R.string.close);
+            isRestaurantOpen.setTypeface(null, Typeface.NORMAL);
+            isRestaurantOpen.setTextColor(Color.rgb(161, 16, 3));
         }
 
         StarsRating.calculateRating(restaurantItem.getRating(), firstStar, secondStar, thirdStar);

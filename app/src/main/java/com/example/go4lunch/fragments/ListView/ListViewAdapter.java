@@ -20,10 +20,6 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewHolder> {
     private final List<RestaurantItem> restaurantItems;
     final Context context;
 
-
-
-
-
     public ListViewAdapter(Context context, List<RestaurantItem> restaurantItems) {
         this.context = context;
         this.restaurantItems = restaurantItems;
@@ -37,9 +33,6 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewHolder> {
         return new ListViewHolder(v);
     }
 
-
-
-
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
 
@@ -48,6 +41,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewHolder> {
             Intent i = new Intent(view.getContext(), DetailsActivity.class);
             i.putExtra("key", restaurantItems.get(position).getPlace_id());
             view.getContext().startActivity(i);
+
         });
     }
 

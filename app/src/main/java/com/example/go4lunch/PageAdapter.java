@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.go4lunch.fragments.Chat.MessagesFragment;
 import com.example.go4lunch.fragments.ListViewFragment;
 import com.example.go4lunch.fragments.MapsFragment;
 import com.example.go4lunch.fragments.WorkmatesFragment;
@@ -16,7 +17,7 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return(3);
+        return(4);
     }
 
     @Override
@@ -28,6 +29,8 @@ public class PageAdapter extends FragmentPagerAdapter {
                 return new ListViewFragment();
             case 2:
                 return new WorkmatesFragment();
+            case 3:
+                return new MessagesFragment();
             default:
                 return null;
         }
@@ -42,6 +45,8 @@ public class PageAdapter extends FragmentPagerAdapter {
                 return "List View";
             case 2:
                 return "Workmates";
+            case 3:
+                return "Chat";
             default:
                 return null;
         }

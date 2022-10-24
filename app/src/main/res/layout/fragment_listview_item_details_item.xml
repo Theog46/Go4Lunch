@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4sp"
-        android:text="is joining!"
+        android:text="@string/is_joining"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/workmate_picture"
         app:layout_constraintStart_toEndOf="@+id/workmate_name"

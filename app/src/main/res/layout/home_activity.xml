@@ -21,8 +21,31 @@
         android:id="@+id/activity_main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:title="I'm Hungry!"
-        android:background="#db3c23"/>
+        app:title="@string/hungry"
+        android:background="#db3c23">
+
+        <ImageView
+            android:id="@+id/dropdown_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_search_24"
+            android:layout_gravity="right"
+            android:layout_marginRight="16dp"
+            app:tint="@color/white"
+            />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search"
+            android:maxLines="1"
+            android:visibility="gone"
+            android:textColorHighlight="@color/white"
+            android:popupBackground="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/activity_main_toolbar" />
+
+    </androidx.appcompat.widget.Toolbar>
 
 
     <androidx.viewpager.widget.ViewPager

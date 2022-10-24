@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton fbBtn = findViewById(R.id.login_button);
         fbBtn.setReadPermissions("email", "public_profile");
@@ -151,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                             addUserToFirestore(user);
 
 
+
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
 
@@ -165,12 +167,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void addUserToFirestore(FirebaseUser user) {
         if (user != null && !user.isAnonymous()) {
-            fireStoreViewModel.createUser(user.getUid(), user.getPhotoUrl().toString(), user.getDisplayName(), user.getEmail());
+            fireStoreViewModel.createUser(user.getUid(), "null", "null", user.getPhotoUrl().toString(), user.getDisplayName(), user.getEmail());
             FirebaseMessaging.getInstance().subscribeToTopic("users");
 
 
         }
     }
 
+    private void setupNotification() {
+
+    }
 
 }

@@ -2,9 +2,13 @@ package com.example.go4lunch;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,16 +18,29 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.example.go4lunch.fragments.MapsFragment;
+import com.example.go4lunch.Model.AutoComplete.ResultsAutoComplete;
+import com.example.go4lunch.Model.Maps.Location;
+import com.example.go4lunch.Model.User;
+import com.example.go4lunch.ViewModel.AutoCompleteViewModel;
+import com.example.go4lunch.ViewModel.FirestoreViewModel;
+import com.example.go4lunch.ViewModel.RestaurantItem;
+import com.example.go4lunch.ViewModel.RestaurantsListViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,6 +53,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private TextView email_nav;
     private ImageView image_nav;
     private GoogleSignInClient mGoogleSignInClient;
+    private FirestoreViewModel firestoreViewModel;
+    private User mUser;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private AutoCompleteViewModel autoCompleteViewModel;
+    private AutoCompleteTextView autoCompleteTextView;
+    private RestaurantsListViewModel restaurantsListViewModel;
+    private ImageView searchIcon;
+    List<RestaurantItem> data = new ArrayList<>();
+    String userLocation;
+    private Fragment listViewFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +75,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         this.configureViewPager();
 
+
+        firestoreViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(FirestoreViewModel.class);
+        autoCompleteViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(AutoCompleteViewModel.class);
+        restaurantsListViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(RestaurantsListViewModel.class);
+        this.searchAutoComplete();
+
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+
+        firestoreViewModel.getYourLunch(user.getUid()).observe(this, value -> mUser = value);
 
         View headerV = navigationView.getHeaderView(0);
         username_nav = headerV.findViewById(R.id.nav_username);
@@ -61,7 +96,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Glide.with(this).load(user.getPhotoUrl())
                 .transform(new CircleCrop())
                 .into(image_nav);
-        Log.d("USERN", user.getDisplayName());
+
+        searchIcon = findViewById(R.id.dropdown_search);
+        this.openAutoComplete();
+
+
     }
 
 
@@ -80,14 +119,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.activity_main_drawer_restaurant:
-                Fragment fragment = new MapsFragment();
-
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .commit();
-                break;
+                yourLunch();
+                return true;
             case R.id.activity_main_drawer_settings:
-                break;
+                openSettings();
+                return true;
             case R.id.activity_main_drawer_power:
                 logout();
                 return true;
@@ -101,6 +137,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void configureToolBar() {
         this.toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
+        autoCompleteTextView = findViewById(R.id.autoComplete);
     }
 
     private void configureDrawerLayout() {
@@ -129,16 +166,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         tabs.getTabAt(0).setIcon(R.drawable.ic_baseline_map_24);
         tabs.getTabAt(1).setIcon(R.drawable.ic_baseline_list_24);
         tabs.getTabAt(2).setIcon(R.drawable.ic_baseline_people_24);
+        tabs.getTabAt(3).setIcon(R.drawable.ic_baseline_chat_24);
         // 3 - Design purpose. Tabs have the same width
         tabs.setTabMode(TabLayout.MODE_FIXED);
     }
 
     private void yourLunch() {
-        // TODO yourLunch //
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        Intent i = new Intent(this, DetailsActivity.class);
+        i.putExtra("key", mUser.getRestaurantId());
+        navigationView.getContext().startActivity(i);
     }
 
-    private void settings() {
-        // TODO paramètres notifs + changements langue //
+    private void openSettings() {
+        Intent i = new Intent(this, SettingsActivity.class);
+        i.putExtra("key", mUser.getRestaurantId());
+        navigationView.getContext().startActivity(i);
     }
 
     private void logout() {
@@ -147,6 +191,86 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         startActivity(i);
     }
 
+    private void openAutoComplete() {
+        searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                autoCompleteTextView.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void searchAutoComplete() {
+        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 2) {
+                    autoCompleteViewModel.getAutoCompleteResults(charSequence.toString());
+                } if (charSequence.length() < 10) {
+                    reinit();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        autoCompleteViewModel.getListAutoComplete().observe(this, this::filterResults);
+
+        autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
+            MutableLiveData<List<ResultsAutoComplete>> predictions = autoCompleteViewModel.getListAutoComplete();
+            if (parent.getItemAtPosition(position) == getResources().getString(R.string.places_autocomplete_no_results_for_query)) {
+                autoCompleteTextView.setText("");
+            } else {
+                for (ResultsAutoComplete prediction : Objects.requireNonNull(predictions.getValue())) {
+                    if (parent.getItemAtPosition(position) == prediction.getDescription()) {
+                        Log.d("AUTO", prediction.getDescription());
+                        String placeId = prediction.getPlace_id();
+
+                        update(placeId);
+
+
+                    }
+                }
+            }
+        });
+    }
+
+    private void update(String placeId) {
+        restaurantsListViewModel.callPlacesForAutoComplete(placeId);
+        restaurantsListViewModel.getDetailRestaurant().observe(this, changedDetailRestaurant -> {
+
+        });
+    }
+
+    private void reinit() {
+        Location userLoc = (restaurantsListViewModel.getLocationReinit());
+        String userLocStr = userLoc.getLat() + "," + userLoc.getLng();
+        restaurantsListViewModel.initList(userLocStr);
+    }
+
+    private void filterResults(List<ResultsAutoComplete> resultsAutoCompletes) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_dropdown_item_1line);
+        adapter.notifyDataSetChanged();
+        autoCompleteTextView.setAdapter(adapter);
+
+        for (ResultsAutoComplete prediction : resultsAutoCompletes) {
+            if (prediction.getTypes().contains("restaurant")) {
+                adapter.add(prediction.getDescription());
+                adapter.notifyDataSetChanged();
+            }
+        }
+        if (adapter.getCount() == 0) {
+            adapter.add(getResources().getString(R.string.adapter_empty));
+            adapter.notifyDataSetChanged();
+        }
+    }
 
 
 }

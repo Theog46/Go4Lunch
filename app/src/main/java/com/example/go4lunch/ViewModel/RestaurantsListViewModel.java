@@ -9,9 +9,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
+import com.example.go4lunch.Model.Maps.Geometry;
 import com.example.go4lunch.Model.Maps.Location;
 import com.example.go4lunch.Model.Maps.OpeningHours;
 import com.example.go4lunch.Model.Maps.Result;
+
+import com.example.go4lunch.Model.User;
+import com.example.go4lunch.Repository.DetailRepository;
 import com.example.go4lunch.Repository.FirestoreRepository;
 import com.example.go4lunch.Repository.NearbyRepository;
 import com.example.go4lunch.Repository.UserLocationRepository;
@@ -23,32 +27,47 @@ public class RestaurantsListViewModel extends ViewModel {
 
     NearbyRepository nearbyRepository;
     UserLocationRepository userLocationRepository;
-    private Location location;
+    FirestoreRepository firestoreRepository;
+    DetailRepository detailRepository;
+    private Location userLocation;
 
-
+    @SuppressLint("MissingPermission")
     public RestaurantsListViewModel(
             @NonNull NearbyRepository nearbyRepository,
             @NonNull UserLocationRepository userLocationRepository,
-            @NonNull FirestoreRepository firestoreRepository) {
+            @NonNull FirestoreRepository firestoreRepository,
+            @NonNull DetailRepository detailRepository) {
         this.nearbyRepository = nearbyRepository;
         this.userLocationRepository = userLocationRepository;
-
+        this.firestoreRepository = firestoreRepository;
+        this.detailRepository = detailRepository;
         getLocation();
     }
 
-    private MutableLiveData<List<Result>> lRestaurantMutableLiveData = new MutableLiveData<>();
+
+
+
+    public static MutableLiveData<List<Result>> lRestaurantMutableLiveData = new MutableLiveData<>();
+
+    public static MutableLiveData<ArrayList<com.example.go4lunch.Model.Details.Result>> lRestaurantResult = new MutableLiveData<>();
 
     @NonNull
     private MutableLiveData<ArrayList<RestaurantItem>> lRestaurantItem = new MutableLiveData<>();
 
+    public static MutableLiveData<com.example.go4lunch.Model.Details.Result> dRestaurant = new MutableLiveData<>();
+
     @SuppressLint("MissingPermission")
     public void getLocation() {
-        userLocationRepository.getLocation();
+        if (false) {
+            userLocationRepository.stopRequest();
+        } else {
+            userLocationRepository.getLocation();
+        }
     }
 
 
     public LiveData<List<RestaurantItem>> mapDataToViewState
-            (LiveData<List<Result>> lRestaurantMutableLiveData) {
+            (LiveData<List<Result>> lRestaurantMutableLiveData, List<User> workmates) {
         return Transformations.map(lRestaurantMutableLiveData, restaurant -> {
             ArrayList<RestaurantItem> restaurantStateItems = new ArrayList<>();
 
@@ -62,8 +81,8 @@ public class RestaurantsListViewModel extends ViewModel {
                         result.getPhotos(),
                         (int) Math.round(getRange(result.getGeometry().getLocation())),
                         (float) result.getRating(),
-                        isRestaurantOpen(result.getOpeningHours())
-
+                        isRestaurantOpen(result.getOpeningHours()),
+                        getWorkmates(result.getPlaceId(), workmates)
                 ));
             }
 
@@ -79,9 +98,10 @@ public class RestaurantsListViewModel extends ViewModel {
     }
 
     public LiveData<List<RestaurantItem>> getRestaurants() {
-
-        return mapDataToViewState(lRestaurantMutableLiveData);
+        List<User> workmates = firestoreRepository.getAllWorkmates().getValue();
+        return mapDataToViewState(lRestaurantMutableLiveData, workmates);
     }
+
 
     private Boolean isRestaurantOpen(OpeningHours hours) {
         Boolean defineState;
@@ -93,23 +113,59 @@ public class RestaurantsListViewModel extends ViewModel {
         return defineState;
     }
 
+    @SuppressLint("MissingPermission")
     public Double getRange(Location restaurantLocation) {
 
         double distance;
-        double lat;
-        double lng;
         Location rLoc = new Location(restaurantLocation.getLat(), restaurantLocation.getLng());
-        String str_user_lat = "37.4219983";
-        String str_user_lng = "-122.084";
 
-        lat = Double.parseDouble(str_user_lat);
-        lng = Double.parseDouble(str_user_lng);
+        Location userLc = userLocationRepository.locationLiveData().getValue();
 
-        Location userLoc = new Location(lat, lng);
-        distance = Location.computeDistance(userLoc, rLoc);
+
+        distance = Location.computeDistance(userLc, rLoc);
         return distance;
     }
 
+    private Integer getWorkmates(String placeId, List<User> workmates) {
+        int workmatesNumber = 0;
+        for (User user : workmates) {
+            if (user.getRestaurantId() != null && user.getRestaurantId().equals(placeId)) {
+                workmatesNumber++;
+            }
+        }
+        return workmatesNumber;
+    }
 
+    public void callPlacesForAutoComplete(String placeId) {
+        dRestaurant = detailRepository.getPlaceDetailResults(placeId);
+    }
+
+    public Location getLocationReinit() {
+        return userLocationRepository.locationLiveData().getValue();
+    }
+
+    public LiveData<ArrayList<Result>> getDetailRestaurant() {
+        detailRepository.getPlaceDetailResults();
+        return mapData(dRestaurant);
+    }
+
+    private LiveData<ArrayList<Result>> mapData(LiveData<com.example.go4lunch.Model.Details.Result> dRestaurant) {
+        return Transformations.map(dRestaurant, detailRestaurant -> {
+            ArrayList<Result> lRestauDetail = new ArrayList<>();
+            Result result = new Result();
+            Geometry geometry = new Geometry();
+            geometry.setLocation(detailRestaurant.getGeometry().getLocation());
+            result.setPlaceId(detailRestaurant.getPlaceId());
+            result.setName(detailRestaurant.getName());
+            result.setVicinity(detailRestaurant.getVicinity());
+            result.setRating(detailRestaurant.getRating());
+            result.setPhotos(detailRestaurant.getPhotos());
+            result.setOpeningHours(detailRestaurant.getOpeningHours());
+            result.setGeometry(geometry);
+            lRestauDetail.add(result);
+            lRestaurantMutableLiveData.setValue(lRestauDetail);
+            return lRestauDetail;
+        });
+    }
 
 }

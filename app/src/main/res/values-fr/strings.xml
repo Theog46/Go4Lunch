@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Go4Lunch</string>
+    <string name="facebook_app_id">2816254995335209</string>
+    <string name="fb_login_protocol_scheme">fb2816254995335209</string>
+    <string name="navigation_drawer_open">navigation_drawer_open</string>
+    <string name="navigation_drawer_close">navigation_drawer_close</string>
+    <string name="google_sign_up">Se connecter avec Google</string>
+    <string name="facebook_sign_up">Se connecter avec Facebook</string>
+    <string name="main_app_desc">Trouve un bon restaurant où déjeuner avec tes collègues!</string>
+    <string name="hungry">J\'ai Faim!</string>
+    <string name="map_view">CARTE</string>
+    <string name="list_view">LISTE</string>
+    <string name="workmates">COLLÈGUES</string>
+    <string name="your_lunch">MON REPAS</string>
+    <string name="settings">PARAMÈTRES</string>
+    <string name="logout">SE DÉCONNECTER</string>
+    <string name="close">Fermé</string>
+    <string name="open">Ouvert</string>
+    <string name="call">APPELER</string>
+    <string name="like">AIMER</string>
+    <string name="website">SITE WEB</string>
+    <string name="is_joining">rejoint</string>
+    <string name="is_eating">est en train de manger</string>
+    <string name="not_decided">n\'as pas encore décidé</string>
+    <string name="send_a_message">Écrivez un message…</string>
+    <string name="adapter_empty">Pas de résultats…</string>
+    <string name="lunch_remember">Rappel de votre repas</string>
+    <string name="search">Chercher un restaurant…</string>
+    <string name="notif_hi">Bonjour </string>
+    <string name="notif_place"> vous mangerez ce midi à </string>
+    <string name="notif_place2"> situé à : </string>
+    <string name="notif_workmates"> avec les collègues : </string>
+    <string name="allow_notification">Autoriser les notifications</string>
+    <string name="alreadyLiked">Vous ne pouvez pas aimer 2 restaurants différents.</string>
+
+</resources>

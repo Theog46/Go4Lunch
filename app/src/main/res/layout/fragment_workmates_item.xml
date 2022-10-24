@@ -33,10 +33,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4sp"
-        android:text="is eating french (Le Zinc)"
+        android:text="@string/is_eating"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/workmate_picture"
         app:layout_constraintStart_toEndOf="@+id/workmate_name"
+        app:layout_constraintTop_toTopOf="@id/workmate_picture" />
+
+    <TextView
+        android:id="@+id/workmate_restaurant_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4sp"
+        android:text=""
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/workmate_picture"
+        app:layout_constraintStart_toEndOf="@+id/workmate_state"
         app:layout_constraintTop_toTopOf="@id/workmate_picture" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

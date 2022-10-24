@@ -4,42 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#f3f3f3">
+    android:background="#f3f3f3"
+    android:backgroundTintMode="src_in"
+    android:orientation="vertical">
 
 
     <TextView
         android:id="@+id/restaurant_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="16sp"
-        android:textColor="@color/black"
         android:layout_margin="16px"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/restaurant_range"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/restaurant_address"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Japanese - 24 rue des Petites Ecoles"
-        android:textSize="14sp"
-        android:textColor="#7c807d"
         android:layout_margin="16px"
+        android:text="Japanese - 24 rue des Petites Ecoles"
+        android:textColor="#7c807d"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/workmate_icon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/restaurant_name"
-        app:layout_constraintRight_toLeftOf="@id/restaurant_range"/>
+        app:layout_constraintTop_toBottomOf="@id/restaurant_name" />
 
     <TextView
         android:id="@+id/restaurant_hours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Open until 7.30pm"
-        android:textSize="14sp"
-        android:textColor="#7c807d"
-        android:textStyle="italic"
         android:layout_margin="16px"
+        android:text=""
+        android:textColor="#7c807d"
+        android:textSize="14sp"
+        android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/restaurant_address" />
 
@@ -47,46 +49,69 @@
         android:id="@+id/restaurant_range"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1.2km"
-        android:textSize="16sp"
-        android:textColor="#7c807d"
+        android:layout_marginTop="16px"
         android:layout_marginRight="32px"
+        android:text="1.2km"
+        android:textColor="#7c807d"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/restaurant_picture"
 
-        app:layout_constraintTop_toBottomOf="@id/restaurant_name" />
-    
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/workmate_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/workmate_number"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_range"
+        app:srcCompat="@drawable/ic_baseline_person_outline_24"
+        app:tint="@color/quantum_grey800" />
+
+    <TextView
+        android:id="@+id/workmate_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8px"
+        android:layout_marginRight="16px"
+        android:text="(1)"
+        android:textColor="@color/quantum_grey800"
+        app:layout_constraintEnd_toStartOf="@id/restaurant_picture"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_range" />
+
     <ImageView
         android:id="@+id/star_1"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginRight="10sp"
-        android:src="@drawable/ic_baseline_star_24"
-        app:tint="@color/yellow"
-        android:visibility="gone"
+
+        android:src="@drawable/ic_baseline_star_border_24"
+
+        android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@id/restaurant_picture"
-        app:layout_constraintTop_toBottomOf="@id/restaurant_range"/>
+        app:layout_constraintTop_toBottomOf="@id/workmate_icon"
+        app:tint="@color/quantum_yellowA700" />
 
     <ImageView
         android:id="@+id/star_2"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginRight="30sp"
-        android:src="@drawable/ic_baseline_star_24"
-        app:tint="@color/yellow"
-        android:visibility="gone"
+        android:src="@drawable/ic_baseline_star_border_24"
+        android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@id/restaurant_picture"
-        app:layout_constraintTop_toBottomOf="@id/restaurant_range"/>
+        app:layout_constraintTop_toBottomOf="@id/workmate_icon"
+        app:tint="@color/quantum_yellowA700" />
 
     <ImageView
         android:id="@+id/star_3"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginRight="50sp"
-        android:src="@drawable/ic_baseline_star_24"
-        app:tint="@color/yellow"
-        android:visibility="gone"
+        android:src="@drawable/ic_baseline_star_border_24"
+        android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@id/restaurant_picture"
-        app:layout_constraintTop_toBottomOf="@id/restaurant_range"/>
+        app:layout_constraintTop_toBottomOf="@id/workmate_icon"
+        app:tint="@color/quantum_yellowA700" />
 
 
     <ImageView
@@ -97,7 +122,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cafe"
-        />
+        app:srcCompat="@drawable/cafe" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

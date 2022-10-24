@@ -26,6 +26,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -43,15 +44,11 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     public static String userLocation;
     public LatLng restauLatLng;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-
     }
-
-
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -60,7 +57,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             enableUserLocation();
             zoomToUserLocation();
             getList();
-
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
@@ -68,8 +64,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
             }
         }
-
-
     }
 
     @SuppressLint("MissingPermission")
@@ -122,8 +116,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         }
      }
 
-
-
      private void getList() {
         restaurantsListViewModel.getRestaurants().observe(requireActivity(),
                 restaurantItemList -> {
@@ -142,13 +134,24 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
      }
 
      private Marker showRestaurantMarker(RestaurantItem restaurantItem) {
-        return map.addMarker(new MarkerOptions()
-        .position(new LatLng(
-                restaurantItem.getLat(),
-                restaurantItem.getLng()))
-        .snippet(restaurantItem.getVicinity())
-        .title(restaurantItem.getName()));
 
+        if (restaurantItem.getWorkmates_number() != 0) {
+            return map.addMarker(new MarkerOptions()
+                    .position(new LatLng(
+                            restaurantItem.getLat(),
+                            restaurantItem.getLng()))
+                    .snippet(restaurantItem.getVicinity())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                    .title(restaurantItem.getName()));
+        }
+        if(restaurantItem.getWorkmates_number() == 0) {
+             return map.addMarker(new MarkerOptions()
+                     .position(new LatLng(
+                             restaurantItem.getLat(),
+                             restaurantItem.getLng()))
+                     .snippet(restaurantItem.getVicinity())
+                     .title(restaurantItem.getName()));
+         }
+         return null;
      }
-
 }

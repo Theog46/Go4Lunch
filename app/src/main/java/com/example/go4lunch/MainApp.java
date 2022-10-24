@@ -10,6 +10,7 @@ public class MainApp extends Application {
     public void onCreate() {
         super.onCreate();
         sApp = this;
+
     }
 
     public static Application getApp() {

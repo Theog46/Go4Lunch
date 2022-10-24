@@ -15,10 +15,10 @@ public class RestaurantItem {
     private Integer range;
     private Float rating;
     private boolean isOpen;
+    private Integer workmates_number;
 
 
-
-    public RestaurantItem(String place_id,String name, Double lat, Double lng, String vicinity, List<Photo> pictures, Integer range, Float rating, Boolean isOpen) {
+    public RestaurantItem(String place_id,String name, Double lat, Double lng, String vicinity, List<Photo> pictures, Integer range, Float rating, Boolean isOpen, Integer workmates_number) {
         this.place_id = place_id;
         this.name = name;
         this.lat = lat;
@@ -28,8 +28,7 @@ public class RestaurantItem {
         this.range = range;
         this.rating = rating;
         this.isOpen = isOpen;
-
-
+        this.workmates_number = workmates_number;
     }
 
     public String getPlace_id() {
@@ -72,8 +71,7 @@ public class RestaurantItem {
         this.rating = rating;
     }
 
-
-
+    public Integer getWorkmates_number() { return workmates_number; }
 
 
 }
