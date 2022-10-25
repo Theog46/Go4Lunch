@@ -47,6 +47,10 @@
             android:value="@string/facebook_app_id"
             tools:replace="android:value" />
 
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="2816254995335209" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

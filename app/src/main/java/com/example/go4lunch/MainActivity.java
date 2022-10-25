@@ -40,14 +40,16 @@ public class MainActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
     private FirebaseFirestore db;
     FirestoreViewModel fireStoreViewModel;
+    private String fbToken = "2816254995335209";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-
+        FacebookSdk.setClientToken(fbToken);
         FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.activity_main);
 
 
@@ -98,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            fireStoreViewModel.createUser(user.getUid(), "null", "null", user.getPhotoUrl().toString(), user.getDisplayName(), user.getEmail());
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
                         }
@@ -139,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
@@ -172,10 +178,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-    }
-
-    private void setupNotification() {
-
     }
 
 }

@@ -234,8 +234,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         String placeId = prediction.getPlace_id();
 
                         update(placeId);
-
-
                     }
                 }
             }
@@ -271,6 +269,4 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             adapter.notifyDataSetChanged();
         }
     }
-
-
 }
