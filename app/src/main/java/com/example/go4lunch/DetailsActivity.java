@@ -226,13 +226,6 @@ public class DetailsActivity extends AppCompatActivity {
                                 Log.d("WK", sb.toString());
 
                             });
-
-
-
-
-
-
-
                 }
             });
 

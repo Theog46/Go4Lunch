@@ -9,6 +9,7 @@ import com.example.go4lunch.Model.User;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class FirestoreRepository {
 
     public MutableLiveData<List<Message>> getAllMessages() {
         messagesMutableLiveData = new MutableLiveData<>();
-        messagesCollection.addSnapshotListener((queryDocumentSnapshots, error) -> {
+        messagesCollection.orderBy("date", Query.Direction.DESCENDING).addSnapshotListener((queryDocumentSnapshots, error) -> {
             if (queryDocumentSnapshots == null) {
             } else {
                 messagesList.clear();

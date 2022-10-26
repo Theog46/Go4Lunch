@@ -47,6 +47,7 @@ public class NotificationWorker extends Worker {
 
 
 
+
         if (notifTime.before(now)) {
             notifTime.add(Calendar.HOUR_OF_DAY, 24);
         }
