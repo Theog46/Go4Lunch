@@ -33,5 +33,8 @@
     <string name="notif_workmates"> avec les collègues : </string>
     <string name="allow_notification">Autoriser les notifications</string>
     <string name="alreadyLiked">Vous ne pouvez pas aimer 2 restaurants différents.</string>
-
+    <string name="mapView">Carte</string>
+    <string name="listView">Liste</string>
+    <string name="workmate">Collègues</string>
+    <string name="chat">Messages</string>
 </resources>

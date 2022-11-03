@@ -152,20 +152,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             FirebaseUser user = mAuth.getCurrentUser();
-
                             addUserToFirestore(user);
-
-
-
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
-
-
-                        } else {
-
-
                         }
                     }
                 });
@@ -175,8 +165,6 @@ public class MainActivity extends AppCompatActivity {
         if (user != null && !user.isAnonymous()) {
             fireStoreViewModel.createUser(user.getUid(), "null", "null", user.getPhotoUrl().toString(), user.getDisplayName(), user.getEmail());
             FirebaseMessaging.getInstance().subscribeToTopic("users");
-
-
         }
     }
 

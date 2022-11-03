@@ -32,4 +32,8 @@
     <string name="notif_workmates"> with the following workmates : </string>
     <string name="allow_notification">Allow notification</string>
     <string name="alreadyLiked">You can\'t like 2 different restaurants</string>
+    <string name="mapView">Map View</string>
+    <string name="listView">List View</string>
+    <string name="workmate">Workmates</string>
+    <string name="chat">Chat</string>
 </resources>

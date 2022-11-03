@@ -11,9 +11,13 @@ import com.example.go4lunch.fragments.WorkmatesFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
 
+
     public PageAdapter(FragmentManager mgr) {
         super(mgr);
+
     }
+
+
 
     @Override
     public int getCount() {
@@ -40,13 +44,13 @@ public class PageAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Map View";
+                return MainApp.getApp().getApplicationContext().getString(R.string.mapView);
             case 1:
-                return "List View";
+                return MainApp.getApp().getApplicationContext().getString(R.string.listView);
             case 2:
-                return "Workmates";
+                return MainApp.getApp().getApplicationContext().getString(R.string.workmate);
             case 3:
-                return "Chat";
+                return MainApp.getApp().getApplicationContext().getString(R.string.chat);
             default:
                 return null;
         }
